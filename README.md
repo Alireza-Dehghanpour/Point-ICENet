@@ -34,7 +34,7 @@ data/
 ├── train_data/
 │   ├── surf_pts/                  # Input surface point patches
 │   ├── query/                     # Query point sets
-│   ├── query_label/               # Occupancy labels (0 = off-surface, 1 = on-surface)
+│   ├── query_label/               # Occupancy labels 
 │   └── List of patch IDs
 ├── test_data
 ```
