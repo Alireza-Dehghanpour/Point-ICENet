@@ -66,7 +66,7 @@ After training, you can reconstruct surfaces using:
 python app/surface_reconst.py 
 ```
 
-This script will generate dense surface point clouds or DEM grids depending on the configuration.
+This script will generate dense point clouds from sparse satellite input data, depending on the configuration.
 
 ---
 
