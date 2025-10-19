@@ -1,9 +1,10 @@
-import torch 
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 # ---------------------------------------
-# PointNet (????? ????? ?? Dropout? BatchNorm? ? ?????? ????)
+
 # ---------------------------------------
 
 class PointNet(nn.Module):
@@ -20,9 +21,8 @@ class PointNet(nn.Module):
             nn.ReLU()
         )
 
-        # 5 ???? MLP ???? ?? dropout ? batchnorm
         mlp_layers = []
-        for _ in range(5):
+        for _ in range(10):
             mlp_layers.append(nn.Sequential(
                 nn.Conv1d(2 * hidden_dim, hidden_dim, 1),
                 nn.BatchNorm1d(hidden_dim),
@@ -88,8 +88,9 @@ class PointNet(nn.Module):
 
         return x
 
+
 # ---------------------------------------
-# Residual Block ?? BatchNorm ? Dropout
+
 # ---------------------------------------
 
 class ResidualBlock(nn.Module):
@@ -125,8 +126,8 @@ class ResidualBlock(nn.Module):
         x = self.activation(x + x_short)
         return x
 
+
 # ---------------------------------------
-# ResidualPointNet (???? ???? ?? 5 ???? ??????????)
 # ---------------------------------------
 
 class ResidualPointNet(nn.Module):
@@ -140,11 +141,11 @@ class ResidualPointNet(nn.Module):
             nn.ReLU()
         )
 
-        self.block_0 = ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim)
-        self.block_1 = ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim)
-        self.block_2 = ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim)
-        self.block_3 = ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim)
-        self.block_4 = ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim)
+        # ?? Doubled number of residual blocks (from 5 to 10)
+        self.blocks = nn.ModuleList([
+            ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim) for _ in range(9)
+        ])
+        self.block_last = ResidualBlock(2 * hidden_dim, hidden_dim, hidden_dim)
 
         self.segmentation = segmentation
 
@@ -183,12 +184,12 @@ class ResidualPointNet(nn.Module):
 
         x = self.fc_in(x)
 
-        for block in [self.block_0, self.block_1, self.block_2, self.block_3]:
+        for block in self.blocks:
             x = block(x)
             x_pool = torch.max(x, dim=2, keepdim=True)[0]
             x = torch.cat([x, x_pool], dim=1)
 
-        x = self.block_4(x)
+        x = self.block_last(x)
 
         if self.segmentation:
             x_pool = torch.max(x, dim=2, keepdim=True)[0]

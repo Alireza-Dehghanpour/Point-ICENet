@@ -1,0 +1,17 @@
+# Core deep learning dependencies
+torch
+torchvision
+torch-geometric
+numpy
+scipy
+scikit-learn
+pandas
+h5py
+pyyaml
+matplotlib
+tqdm
+tensorboard
+pillow
+open3d
+scikit-image
+logging
