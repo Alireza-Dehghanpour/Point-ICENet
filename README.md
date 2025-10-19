@@ -78,7 +78,7 @@ Both approaches are valid and produce consistent large-scale DEMs.
 
 Example of elevation difference histogram: predicted Reference DEM (REMA) - DEM:
 
-![Elevation Difference Histogram](./Hist_Abs_diff.png)
+<img src="./Hist_Abs_diff.png" alt="Elevation Difference Histogram" width="500"/>
 
 ---
 
