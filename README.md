@@ -42,8 +42,7 @@ data/
 Each sample corresponds to a `(surface patch, query patch, label file)` triple.
 
 Example of surface and query point patches:
-
-![Surface and Query Points](./plot_input_query_patch2.png)
+<img src="./plot_input_query_patch2.png" alt="Surface and Query Points" width="500"/>
 
 ---
 
